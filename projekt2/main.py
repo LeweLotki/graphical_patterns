@@ -16,17 +16,23 @@ def draw_rectangle(event, x, y, flags, param):
         drawing = True
         ix = x 
         iy = y             
-              
+        if x > 70 and x < 140: 
+            cv2.setMouseCallback("image", activate)      
+    
     elif event == cv2.EVENT_MOUSEMOVE: 
         if drawing == True:
             # print(ix,iy)
             if iy > 50 and iy < 700 and ix > 250 and ix < 900 and y > 50 and y < 700 and x > 250 and x < 900 :
                 cv2.rectangle(img, pt1 =(ix, iy), pt2 =(x, y),  color =(0, 0, 0), thickness = -1) 
-      
+            # if x > 70 and x < 140: 
+                # cv2.setMouseCallback("image", activate)
+    
     elif event == cv2.EVENT_LBUTTONUP: 
         drawing = False
         if iy > 50 and iy < 700 and ix > 250 and ix < 900 and y > 50 and y < 700 and x > 250 and x < 900:
             cv2.rectangle(img, pt1 =(ix, iy), pt2 =(x, y), color =(0, 0, 0), thickness =-1) 
+        # if x > 70 and x < 140: 
+            # cv2.setMouseCallback("image", activate)
 
 def rubber(event, x, y, flags, param): 
       
@@ -36,7 +42,9 @@ def rubber(event, x, y, flags, param):
         drawing = True
         ix = x 
         iy = y             
-              
+        if x > 70 and x < 140: 
+            cv2.setMouseCallback("image", activate)    
+            
     elif event == cv2.EVENT_MOUSEMOVE: 
         if drawing == True:
             # print(ix,iy)
@@ -56,17 +64,19 @@ def pencil(event, x, y, flags, param):
         drawing = True
         ix = x 
         iy = y             
-              
+        if x > 70 and x < 140: 
+            cv2.setMouseCallback("image", activate) 
+            
     elif event == cv2.EVENT_MOUSEMOVE: 
         if drawing == True:
             # print(ix,iy)
             if iy > 50 and iy < 700 and ix > 250 and ix < 900 and y > 50 and y < 700 and x > 250 and x < 900 :
-                img[y,x,:] = (0,0,0)
+                img[y:y+2,x:x+2,:] = (0,0,0)
       
     elif event == cv2.EVENT_LBUTTONUP: 
         drawing = False
         if iy > 50 and iy < 700 and ix > 250 and ix < 900 and y > 50 and y < 700 and x > 250 and x < 900:
-            img[y,x,:] = (0,0,0)
+            img[y:y+2,x:x+2,:] = (0,0,0)
 
 def activate(event, x, y, flags, param):        
 
