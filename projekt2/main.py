@@ -1,5 +1,6 @@
 import numpy as np
 import cv2
+import math
 from packages import image as im
 from packages import drawing as dw
 
@@ -78,6 +79,50 @@ def pencil(event, x, y, flags, param):
         if iy > 50 and iy < 700 and ix > 250 and ix < 900 and y > 50 and y < 700 and x > 250 and x < 900:
             img[y:y+2,x:x+2,:] = (0,0,0)
 
+def circle(event, x, y, flags, param): 
+      
+    global ix, iy, drawing, img 
+      
+    if event == cv2.EVENT_LBUTTONDOWN: 
+        drawing = True
+        ix = x 
+        iy = y             
+        if x > 70 and x < 140: 
+            cv2.setMouseCallback("image", activate) 
+            
+    elif event == cv2.EVENT_MOUSEMOVE: 
+        if drawing == True:
+            # print(ix,iy)
+            if iy > 50 and iy < 700 and ix > 250 and ix < 900 and y > 50 and y < 700 and x > 250 and x < 900 :
+                cv2.circle(img, (int((ix+x)/2), int((iy+y)/2)),int(math.sqrt( ((ix-x)**2)+((iy-y)**2) )),(0,0,0),-1)
+      
+    elif event == cv2.EVENT_LBUTTONUP: 
+        drawing = False
+        if iy > 50 and iy < 700 and ix > 250 and ix < 900 and y > 50 and y < 700 and x > 250 and x < 900:
+            cv2.circle(img, (int((ix+x)/2), int((iy+y)/2)),int(math.sqrt( ((ix-x)**2)+((iy-y)**2) )),(0,0,0),-1)
+
+def line(event, x, y, flags, param): 
+      
+    global ix, iy, drawing, img 
+      
+    if event == cv2.EVENT_LBUTTONDOWN: 
+        drawing = True
+        ix = x 
+        iy = y             
+        if x > 70 and x < 140: 
+            cv2.setMouseCallback("image", activate) 
+            
+    elif event == cv2.EVENT_MOUSEMOVE: 
+        if drawing == True:
+            # print(ix,iy)
+            if iy > 50 and iy < 700 and ix > 250 and ix < 900 and y > 50 and y < 700 and x > 250 and x < 900 :
+                cv2.line(img,(ix,iy),(x,y),(0,0,0),2)
+      
+    elif event == cv2.EVENT_LBUTTONUP: 
+        drawing = False
+        if iy > 50 and iy < 700 and ix > 250 and ix < 900 and y > 50 and y < 700 and x > 250 and x < 900:
+            cv2.line(img,(ix,iy),(x,y),(0,0,0),2)
+
 def activate(event, x, y, flags, param):        
 
     if event == cv2.EVENT_LBUTTONDOWN and y > 635 and y < 705 and x > 70 and x < 140: 
@@ -88,6 +133,12 @@ def activate(event, x, y, flags, param):
     
     if event == cv2.EVENT_LBUTTONDOWN and y > 435 and y < 505 and x > 70 and x < 140:
         cv2.setMouseCallback("image", pencil)  
+    
+    if event == cv2.EVENT_LBUTTONDOWN and y > 135 and y < 405 and x > 70 and x < 140:
+        cv2.setMouseCallback("image", circle)  
+        
+    if event == cv2.EVENT_LBUTTONDOWN and y > 235 and y < 305 and x > 70 and x < 140:
+        cv2.setMouseCallback("image", line)  
 
 img[50:700,250:900,:] = (255, 255, 255)
 # print(np.shape(img), np.shape(im.fill))
