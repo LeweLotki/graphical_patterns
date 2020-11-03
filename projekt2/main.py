@@ -7,7 +7,6 @@ ix = -1
 iy = -1
 drawing = False
 img = cv2.imread(r'F:\freelancer\projekt2\images\wood.png')
-rectangle = False
 
 def draw_rectangle(event, x, y, flags, param): 
       
@@ -30,11 +29,9 @@ def draw_rectangle(event, x, y, flags, param):
             cv2.rectangle(img, pt1 =(ix, iy), pt2 =(x, y), color =(0, 255, 255), thickness =-1) 
 
 def activate_rect(event, x, y, flags, param):        
-    
-    global rectangle
 
-    if event == cv2.EVENT_LBUTTONDOWN and y > 50 and y < 700 and x > 250 and x < 900: 
-        rectangle = True           
+    if event == cv2.EVENT_LBUTTONDOWN and y > 50 and y < 700 and x > 0 and x < 200: 
+        cv2.setMouseCallback("image", draw_rectangle)
         
 img[50:700,250:900,:] = (255, 255, 255)
 # print(np.shape(img), np.shape(im.fill))
@@ -45,13 +42,16 @@ for val in im.list_icon:
 cv2.namedWindow(winname = "image") 
 cv2.setMouseCallback("image", activate_rect)
 
-if rectangle == True:
-    cv2.setMouseCallback("image", draw_rectangle) 
-
+# if rectangle == True:
+    # cv2.setMouseCallback("image", draw_rectangle) 
+    
 while True: 
     cv2.imshow("image", img) 
     if cv2.waitKey(10) == 27: 
         break
+    elif cv2.waitKey(10) == ord('c'):
+        img[50:700,250:900,:] = (255, 255, 255)
+
 cv2.destroyAllWindows() 
   
 
